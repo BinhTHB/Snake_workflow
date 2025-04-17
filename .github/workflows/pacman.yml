@@ -2,7 +2,7 @@ name: Generate Pacman Animation
 
 on:
   schedule:
-    - cron: "0 */12 * * *"
+    - cron: "0 */12 * * *"  # chạy mỗi 12 giờ
   workflow_dispatch:
   push:
     branches:
@@ -24,7 +24,7 @@ jobs:
         with:
           github_user_name: ${{ github.repository_owner }}
 
-      - name: Show generated files
+      - name: Kiểm tra file đầu ra
         run: ls -l dist
 
       - name: Deploy to Output Branch
@@ -33,5 +33,6 @@ jobs:
           target_branch: output
           build_dir: dist
           commit_message: "Update pacman animation [skip ci]"
+          force: true               # ✅ ép ghi khi có xung đột
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
